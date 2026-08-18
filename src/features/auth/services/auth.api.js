@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const api =axios.create({
-    baseURL:"http://localhost:3000",
-    withCredentials:true
-})
+const api = axios.create({
+    baseURL: "https://genai-backend-1-94gd.onrender.com",
+    withCredentials: true,
+});
 
 export async function register({ username, email, password }) {
     try {
@@ -12,16 +12,18 @@ export async function register({ username, email, password }) {
             {
                 username,
                 email,
-                password
-            },
-            {
-                withCredentials: true
+                password,
             }
         );
 
         return response.data;
     } catch (err) {
-        console.log(err);
+        console.error(
+            "REGISTER ERROR:",
+            err.response?.data || err.message
+        );
+
+        throw err;
     }
 }
 
@@ -31,47 +33,55 @@ export async function login({ email, password }) {
             "/api/auth/login",
             {
                 email,
-                password
-            },
-            {
-                withCredentials: true
+                password,
             }
         );
 
+        console.log("LOGIN RESPONSE:", response.data);
+
         return response.data;
     } catch (err) {
-        console.log(err);
+        console.error(
+            "LOGIN ERROR:",
+            err.response?.data || err.message
+        );
+
+        throw err;
     }
 }
 
 export async function logout() {
     try {
         const response = await api.get(
-            "/api/auth/logout",
-            {
-                withCredentials: true
-            }
+            "/api/auth/logout"
         );
 
         return response.data;
     } catch (err) {
-        console.log(err);
+        console.error(
+            "LOGOUT ERROR:",
+            err.response?.data || err.message
+        );
+
+        throw err;
     }
 }
 
 export async function getMe() {
     try {
         const response = await api.get(
-            "/api/auth/get-me",
-            {
-                withCredentials: true
-            }
+            "/api/auth/get-me"
         );
+
+        console.log("GET ME RESPONSE:", response.data);
 
         return response.data;
     } catch (err) {
-        console.log(err);
+        console.error(
+            "GET ME ERROR:",
+            err.response?.data || err.message
+        );
+
+        throw err;
     }
 }
-
-

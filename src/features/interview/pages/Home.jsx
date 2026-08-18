@@ -12,12 +12,51 @@ const Home = () => {
 
     const navigate = useNavigate()
 
-    const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[ 0 ]
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        navigate(`/interview/${data._id}`)
+   const handleGenerateReport = async () => {
+
+    const resumeFile = resumeInputRef.current?.files?.[0]
+
+    // Basic validation
+    if (!jobDescription.trim()) {
+        alert("Please enter the Job Description")
+        return
     }
 
+    if (!resumeFile && !selfDescription.trim()) {
+        alert("Please upload a Resume or enter your Self Description")
+        return
+    }
+
+    try {
+
+        const data = await generateReport({
+            jobDescription,
+            selfDescription,
+            resumeFile
+        })
+
+        // Backend/API failed
+        if (!data) {
+            alert("Failed to generate interview report. Please try again.")
+            return
+        }
+
+        // Make sure report ID exists
+        if (!data._id) {
+            console.error("Interview report ID missing:", data)
+            alert("Interview report was generated but ID is missing.")
+            return
+        }
+
+        navigate(`/interview/${data._id}`)
+
+    } catch (error) {
+
+        console.error("HANDLE GENERATE REPORT ERROR:", error)
+        alert("Something went wrong while generating the interview report.")
+
+    }
+}
     if (loading) {
         return (
             <main className='loading-screen'>
