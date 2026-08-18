@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://genai-backend-1-94gd.onrender.com",
+    baseURL: "https://genai-backend-poyi.onrender.com",
     withCredentials: true,
 });
-
 
 // =====================================================
 // GENERATE INTERVIEW REPORT
