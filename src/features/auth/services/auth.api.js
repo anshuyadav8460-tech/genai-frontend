@@ -5,83 +5,92 @@ const api = axios.create({
     withCredentials: true,
 });
 
+// =========================
+// REGISTER
+// =========================
 export async function register({ username, email, password }) {
     try {
-        const response = await api.post(
-            "/api/auth/register",
-            {
-                username,
-                email,
-                password,
-            }
-        );
+        const response = await api.post("/api/auth/register", {
+            username,
+            email,
+            password,
+        });
 
         return response.data;
-    } catch (err) {
+
+    } catch (error) {
         console.error(
             "REGISTER ERROR:",
-            err.response?.data || err.message
+            error.response?.data || error.message
         );
 
-        throw err;
+        throw error;
     }
 }
 
+
+// =========================
+// LOGIN
+// =========================
 export async function login({ email, password }) {
     try {
-        const response = await api.post(
-            "/api/auth/login",
-            {
-                email,
-                password,
-            }
-        );
+        const response = await api.post("/api/auth/login", {
+            email,
+            password,
+        });
 
         console.log("LOGIN RESPONSE:", response.data);
 
         return response.data;
-    } catch (err) {
+
+    } catch (error) {
         console.error(
             "LOGIN ERROR:",
-            err.response?.data || err.message
+            error.response?.data || error.message
         );
 
-        throw err;
+        throw error;
     }
 }
 
+
+// =========================
+// LOGOUT
+// =========================
 export async function logout() {
     try {
-        const response = await api.get(
-            "/api/auth/logout"
-        );
+        const response = await api.get("/api/auth/logout");
 
         return response.data;
-    } catch (err) {
+
+    } catch (error) {
         console.error(
             "LOGOUT ERROR:",
-            err.response?.data || err.message
+            error.response?.data || error.message
         );
 
-        throw err;
+        throw error;
     }
 }
 
+
+// =========================
+// GET CURRENT USER
+// =========================
 export async function getMe() {
     try {
-        const response = await api.get(
-            "/api/auth/get-me"
-        );
+        const response = await api.get("/api/auth/get-me");
 
         console.log("GET ME RESPONSE:", response.data);
 
         return response.data;
-    } catch (err) {
+
+    } catch (error) {
         console.error(
             "GET ME ERROR:",
-            err.response?.data || err.message
+            error.response?.data || error.message
         );
 
-        throw err;
+        throw error;
     }
 }
